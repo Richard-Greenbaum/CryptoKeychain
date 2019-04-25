@@ -24,6 +24,7 @@ class ScrollingActivity : AppCompatActivity() {
             var sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
             var editor = sharedPref.edit()
             editor.putBoolean("HAS_PASSWORD", false)
+            editor.putString("PASSWORD_HASH", "")
             editor.apply()
 
             val intent = Intent(applicationContext, NewUserActivity::class.java)

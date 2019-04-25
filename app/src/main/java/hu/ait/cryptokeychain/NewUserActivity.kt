@@ -18,6 +18,10 @@ class NewUserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_user_activity)
 
+        generatePasswordBtn.setOnClickListener {
+            showGeneratePasswordDialog()
+        }
+
         doneBtn.setOnClickListener{
             if (passwordEt1.text.toString() == passwordEt2.text.toString()) {
                 if (passwordEt1.text.toString().length > 7){
@@ -34,6 +38,11 @@ class NewUserActivity : AppCompatActivity() {
 
         }
     }
+
+    private fun showGeneratePasswordDialog() {
+        PassGenDialogue().show(supportFragmentManager, "TAG_PASS-GEN_DIALOG")
+    }
+
     fun passwordCreated(password : String) {
         var password_hash = hash(password)
         storeHash(password_hash)
@@ -93,6 +102,11 @@ class NewUserActivity : AppCompatActivity() {
             passwordHash = passwordHash.hashCode().toString()
         }
         return passwordHash
+    }
+
+    fun setPassword(password: String) {
+        passwordEt1.setText(password)
+        passwordEt2.setText(password)
     }
 
 
