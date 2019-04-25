@@ -9,7 +9,9 @@ import java.io.Serializable
 data class Account(
     @PrimaryKey(autoGenerate = true) var itemId : Long?,
     @ColumnInfo(name = "account_name") var account_name: String,
-    @ColumnInfo(name = "username") var type: String,
-    @ColumnInfo(name = "encrypted_password") var encrypted_password: String
+    @ColumnInfo(name = "username") var username: String,
+    @ColumnInfo(name = "encrypted_password") var encrypted_password: String,
+    @ColumnInfo(name = "iv") var iv: String
 
-) : Serializable
+
+    ) : Serializable
