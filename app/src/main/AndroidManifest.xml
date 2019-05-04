@@ -23,8 +23,8 @@
         </activity>
 
         <activity android:name=".NewUserActivity"/>
-        <activity android:name=".ScrollingActivity"/>
         <activity android:name=".LogInActivity"/>
+        <activity android:name=".MainActivity"/>
 
 
 

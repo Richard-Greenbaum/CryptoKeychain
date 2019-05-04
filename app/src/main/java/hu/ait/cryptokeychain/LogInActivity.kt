@@ -3,7 +3,7 @@ package hu.ait.cryptokeychain
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.log_in_activity.*
@@ -56,7 +56,7 @@ class LogInActivity : AppCompatActivity() {
     private fun sendKey(key : ByteArray) {
         var intentDetails = Intent()
         intentDetails.setClass(this@LogInActivity,
-            ScrollingActivity::class.java)
+            MainActivity::class.java)
 
         intentDetails.putExtra("passwordKey", key)
 
