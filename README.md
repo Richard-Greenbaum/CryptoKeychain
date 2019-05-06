@@ -3,7 +3,7 @@
 CryptoKeychain is a secure password management Android application. The app, as other keychain apps
 do, uses a Password Based Key Derivation Function (PBKDF2) to generate a key from the user's master
 password to encrypt (using AES-CBC) the passwords stored in the user's vault. Later sections discuss
-in great detail the cryptographic primitives used to achieve maximum security.
+in the cryptographic primitives used to achieve maximum security in greater detail.
 
 ## Attacker Model
 A cryptographic attacker model is composed of the presumed goals and capabilities that an attacker 
@@ -28,18 +28,18 @@ We have several application components in place to protect the master password. 
 that we require that the master password be at least 8 characters long. This ensures that the 
 state space of possible passwords is very large. Assuming that each character can consist of an 
 upper or lower case letter, a number, or a special character, the state space of an 8 digit 
-password is 91^8 passwords long.
+password is 91<sup>8</sup> passwords long.
 
 Furthermore, the master password is not stored directly in the device’s memory. Instead, a hash value 
 is computed by hashing the master password with the Kotlin hashCode function and then repeatedly 
 hashing the output of the function for half a second. When the user tries to log in at a later 
 time, the hash of the input password will be computed in the same way and then it will be compared 
-to the stored hash value. If the values are equal, then the user inputted the correct master 
-password. Otherwise they did not. Note the increase in security that is gained by repeatedly 
-hashing for half a second, protecting even fairly weak passwords. As an example, assume that the 
+to the stored hash value in Android Shared Preferences. If the values are equal, then the user inputted
+the correct master password. Otherwise they did not. Note the increase in security that is gained by
+repeatedly hashing for half a second, protecting even fairly weak passwords. As an example, assume that the 
 user created an 8 digit password that consists only of lowercase letters, and that the attacker 
-has this information. This will result in a brute force attack on 26^8 possible passwords. For an 
-attacker to generate and verify each possible password, they would need (26^8)/2 seconds, or more 
+has this information. This will result in a brute force attack on 26<sup>8</sup> possible passwords. For an 
+attacker to generate and verify each possible password, they would need (26<sup>8</sup>)/2 seconds, or more 
 than 3300 years. The odds that the attacker would arrive at the correct password in the first 10 
 years is less than 0.3%. 
 
