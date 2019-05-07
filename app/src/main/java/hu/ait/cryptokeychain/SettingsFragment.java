@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import hu.ait.cryptokeychain.data.AppDatabase;
 
 public class SettingsFragment extends Fragment {
     private static String TAG = "SettingsFragment";
@@ -55,7 +57,6 @@ public class SettingsFragment extends Fragment {
         resetApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 AlertDialog.Builder resetConfirmationDialog = new AlertDialog.Builder(getActivity());
                 resetConfirmationDialog.setTitle("Erase All Content and Settings");
                 resetConfirmationDialog.setMessage("Are you sure you want to erase all content and settings? This " +
@@ -68,6 +69,7 @@ public class SettingsFragment extends Fragment {
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("HAS_PASSWORD", false);
                         editor.apply();
+                        new DeleteAllAccountsAsyncTask().execute();
 
                         // Take them back to the NewUserActivity
                         Intent intent = new Intent(getActivity(), NewUserActivity.class);
@@ -77,11 +79,25 @@ public class SettingsFragment extends Fragment {
                 resetConfirmationDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        dialog.dismiss();
                     }
                 });
+                resetConfirmationDialog.show();
             }
         });
 
+    }
+
+    /**
+     * AsyncTask to perform database operations. Database cannot be accessed on the
+     * main thread as it will lock up the UI.
+     */
+    private class DeleteAllAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... account) {
+            AppDatabase.Companion.getInstance(getActivity()).AccountDao().deleteAll();
+            return null;
+        }
     }
 }

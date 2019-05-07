@@ -15,8 +15,9 @@
                 android:text="@string/reset_app"
                 android:layout_gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:layout_marginTop="10sp"
                 android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="5sp"
+                android:layout_marginStart="5sp"
                 android:clickable="true"
                 android:focusable="true">
 

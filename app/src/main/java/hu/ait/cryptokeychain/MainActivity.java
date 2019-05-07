@@ -3,6 +3,7 @@ package hu.ait.cryptokeychain;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public NavController mNavController;
     private SharedViewModel mViewModel;
     protected SecretKeySpec passwordKey;
+    public Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +45,15 @@ public class MainActivity extends AppCompatActivity {
 
         mViewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
 
+        setSupportActionBar(mToolbar);
         setupNavigation();
 
     }
 
     // Setting Up One Time Navigation
     private void setupNavigation(){
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         mNavigationView = findViewById(R.id.navigation);
 
         mNavController = findNavController(this, R.id.nav_host_fragment);
@@ -60,9 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navigation_accounts:
                         mNavController.navigate(R.id.AccountsFragment);
-                        break;
-                    case R.id.navigation_profile:
-                        mNavController.navigate(R.id.ProfileFragment);
                         break;
                     case R.id.navigation_settings:
                         mNavController.navigate(R.id.SettingsFragment);

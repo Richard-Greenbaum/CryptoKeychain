@@ -6,18 +6,31 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:id="@+id/main_coordinator"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                android:layout_above="@id/navigation">
+                android:layout_above="@id/navigation"
+                android:layout_below="@id/toolbar">
 
             <fragment
                     android:id="@+id/nav_host_fragment"
@@ -27,9 +40,7 @@
                     app:defaultNavHost="true"
                     app:navGraph="@navigation/nav_graph"
                     app:layout_constraintBottom_toTopOf="@+id/navigation"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

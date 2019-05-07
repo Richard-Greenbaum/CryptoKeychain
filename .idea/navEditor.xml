@@ -20,6 +20,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="CreateAccountFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="PasswordInfoFragment">
                     <value>
                       <LayoutPositions>
@@ -27,18 +39,6 @@
                           <Point>
                             <option name="x" value="396" />
                             <option name="y" value="-125" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="ProfileFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="395" />
-                            <option name="y" value="174" />
                           </Point>
                         </option>
                       </LayoutPositions>
