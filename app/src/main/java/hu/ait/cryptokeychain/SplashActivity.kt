@@ -34,6 +34,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_screen)
 
+        lockImg.setImageResource(R.drawable.lockimg)
+
         //Initialize the Handler
         mDelayHandler = Handler()
 
@@ -52,7 +54,8 @@ class SplashActivity : AppCompatActivity() {
             }
         })
 
-        welcomeTv.startAnimation(animation)
+//        welcomeTv.startAnimation(animation)
+        lockImg.startAnimation(animation)
 
 
     }
