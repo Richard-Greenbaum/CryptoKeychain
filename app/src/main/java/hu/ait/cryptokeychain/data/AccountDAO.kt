@@ -1,6 +1,6 @@
 package hu.ait.cryptokeychain.data
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 
 @Dao
