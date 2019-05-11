@@ -117,7 +117,6 @@ public class CreateAccountFragment extends Fragment {
                 }
 
                 byte[] temp = mPassword.getBytes(Charset.defaultCharset());
-                mPassword = null;
                 try {
                     temp = cipher.doFinal(temp);
                 } catch (BadPaddingException e) {
@@ -130,8 +129,6 @@ public class CreateAccountFragment extends Fragment {
                 String encryptedPassword = android.util.Base64.encodeToString(temp, Base64.DEFAULT);
                 String ivString = android.util.Base64.encodeToString(iv, Base64.DEFAULT);
                 saveToDatabase(mAccountName, mUsername, encryptedPassword, ivString);
-                mAccountName = null;
-                mUsername = null;
 
                 // Let the user know their account has been successfully added
                 Toast.makeText(getActivity(), "Account securely stored!", Toast.LENGTH_LONG).show();
