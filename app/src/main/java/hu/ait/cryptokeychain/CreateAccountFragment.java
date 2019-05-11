@@ -35,7 +35,7 @@ public class CreateAccountFragment extends Fragment {
     private static String TAG = "CreateAccountFragment";
     private View mView;
     private SharedViewModel mViewModel;
-    private Button mCancel, mDone;
+    private Button mCancel, mDone, mGenerate;
     private EditText website, username, password;
     private SecretKeySpec passwordKey;
 
@@ -63,6 +63,7 @@ public class CreateAccountFragment extends Fragment {
         // Initialize create account UI elements
         mCancel = mView.findViewById(R.id.cancel_acct_create);
         mDone = mView.findViewById(R.id.confirm_acct_create);
+        mGenerate = mView.findViewById(R.id.generatePasswordBtn2);
         website = mView.findViewById(R.id.website);
         username = mView.findViewById(R.id.username);
         password = mView.findViewById(R.id.password);
@@ -81,6 +82,12 @@ public class CreateAccountFragment extends Fragment {
                 Navigation.findNavController(mView).navigate(R.id.AccountsFragment);
             }
         });
+
+        mGenerate.setOnClickListener(
+            String secure_password = generatePassword();
+            password.setText(secure_password);
+        );
+
 
         mDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +145,10 @@ public class CreateAccountFragment extends Fragment {
             }
         });
 
+    }
+
+    private String generatePassword() {
+        //rudy code here
     }
 
     private void saveToDatabase(String mAccountName, String mUsername, String encryptedPassword, String iv) {

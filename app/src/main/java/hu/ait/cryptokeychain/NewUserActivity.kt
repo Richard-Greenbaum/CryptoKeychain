@@ -33,7 +33,31 @@ class NewUserActivity : AppCompatActivity() {
 
 
         }
+
+        generatePasswordBtn.setOnClickListener {
+            val password = generatePassword()
+            passwordEt1.setText(password)
+            passwordEt2.setText(password)
+        }
     }
+
+    fun generatePassword() : String {
+        var lower = arrayOf("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+        val upper = arrayOf("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+        val num = arrayOf("0","1","2","3","4","5","6","7","8","9")
+
+        val final = lower + upper + num
+
+        var password = ""
+        for (i in 0..10) {
+            Log.d("num", i.toString())
+
+            var index = (0..final.size-1).random()
+            password += final.get(index)
+        }
+        return password
+    }
+
     fun passwordCreated(password : String) {
         var password_hash = hash(password)
         storeHash(password_hash)
