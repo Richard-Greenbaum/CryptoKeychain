@@ -9,10 +9,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.splash_screen.*
 
-/**
- * A sample splash screen created by devdeeds.com
- * by Jayakrishnan P.M
- */
 class SplashActivity : AppCompatActivity() {
     private var mDelayHandler: Handler? = null
     private val SPLASH_DELAY: Long = 3000 //3 seconds
@@ -37,6 +33,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_screen)
 
+        lockImg.setImageResource(R.drawable.lockimg)
+
         //Initialize the Handler
         mDelayHandler = Handler()
 
@@ -55,7 +53,8 @@ class SplashActivity : AppCompatActivity() {
             }
         })
 
-        welcomeTv.startAnimation(animation)
+//        welcomeTv.startAnimation(animation)
+        lockImg.startAnimation(animation)
 
 
     }

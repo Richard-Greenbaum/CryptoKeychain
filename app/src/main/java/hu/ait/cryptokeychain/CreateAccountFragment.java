@@ -83,10 +83,10 @@ public class CreateAccountFragment extends Fragment {
             }
         });
 
-        mGenerate.setOnClickListener(
-            String secure_password = generatePassword();
-            password.setText(secure_password);
-        );
+//        mGenerate.setOnClickListener(
+//            String secure_password = generatePassword();
+//            password.setText(secure_password);
+//        );
 
 
         mDone.setOnClickListener(new View.OnClickListener() {
@@ -147,9 +147,9 @@ public class CreateAccountFragment extends Fragment {
 
     }
 
-    private String generatePassword() {
-        //rudy code here
-    }
+//    private String generatePassword() {
+//        //rudy code here
+//    }
 
     private void saveToDatabase(String mAccountName, String mUsername, String encryptedPassword, String iv) {
         Account newAccount = new Account(null, mAccountName, mUsername, encryptedPassword, iv);
