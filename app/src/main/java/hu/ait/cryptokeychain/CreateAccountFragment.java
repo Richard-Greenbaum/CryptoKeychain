@@ -1,5 +1,7 @@
 package hu.ait.cryptokeychain;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
@@ -7,9 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -28,6 +28,9 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 import static android.content.ContentValues.TAG;
 
@@ -83,11 +86,45 @@ public class CreateAccountFragment extends Fragment {
             }
         });
 
-//        mGenerate.setOnClickListener(
-//            String secure_password = generatePassword();
-//            password.setText(secure_password);
-//        );
+        mGenerate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder PassGenDialogue = new AlertDialog.Builder(getActivity());
 
+                View rootView = getActivity().getLayoutInflater().inflate(R.layout.password_gen_dialogue, null);
+
+                final CheckBox upperLetterCB, numCB, symbolCB;
+                final NumberPicker passwordLengthPicker;
+
+                upperLetterCB = rootView.findViewById(R.id.uppercaseLetterCb);
+                numCB = rootView.findViewById(R.id.numbersCb);
+                symbolCB = rootView.findViewById(R.id.symbolsCb);
+                passwordLengthPicker = rootView.findViewById(R.id.lengthPicker);
+
+                passwordLengthPicker.setMinValue(8);
+                passwordLengthPicker.setMaxValue(12);
+                passwordLengthPicker.setWrapSelectorWheel(false);
+
+                PassGenDialogue.setTitle("Password Generation");
+
+                PassGenDialogue.setPositiveButton("Generate Password", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String secure_password = generatePassword(upperLetterCB.isChecked(), numCB.isChecked(),
+                                symbolCB.isChecked(), passwordLengthPicker);
+                        password.setText(secure_password);
+                    }
+                });
+                PassGenDialogue.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                PassGenDialogue.setView(rootView);
+                PassGenDialogue.show();
+            }
+        });
 
         mDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,9 +184,41 @@ public class CreateAccountFragment extends Fragment {
 
     }
 
-//    private String generatePassword() {
-//        //rudy code here
-//    }
+    private String generatePassword(Boolean upperLetterCB, Boolean numberCB, Boolean symbolCB, NumberPicker lengthPicker) {
+        ArrayList<String> base = new ArrayList<>(Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+                "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"));
+
+        ArrayList<String> upper = new ArrayList<>(Arrays.asList("A","B","C","D","E","F","G", "H","I","J",
+                "K","L","M","N","O","P", "Q","R","S","T","U","V","W","X","Y","Z"));
+
+        ArrayList<String> num = new ArrayList<>(Arrays.asList("0","1","2","3","4","5","6","7","8","9"));
+
+        ArrayList<String> symbol = new ArrayList<>(Arrays.asList("`","~",",","<",".",">","/", "?",";",":","\\","|",
+                "[","{","]","}","!","@", "#","$","%","^","&","*","(",")","-","_","=","+", "\"", "'"));
+
+        if (upperLetterCB) {
+            base.addAll(upper);
+        }
+
+        if (numberCB) {
+            base.addAll(num);
+        }
+
+        if (symbolCB) {
+            base.addAll(symbol);
+        }
+
+        StringBuilder generatedPassword = new StringBuilder();
+        for (int i = 0; i <= lengthPicker.getValue()-1; i++) {
+            Log.d("num", String.valueOf(i));
+
+            Random random = new SecureRandom();
+            int index = random.nextInt(base.size());
+            generatedPassword.append(base.get(index));
+        }
+
+        return generatedPassword.toString();
+    }
 
     private void saveToDatabase(String mAccountName, String mUsername, String encryptedPassword, String iv) {
         Account newAccount = new Account(null, mAccountName, mUsername, encryptedPassword, iv);
