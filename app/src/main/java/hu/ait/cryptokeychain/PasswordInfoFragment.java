@@ -21,6 +21,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -39,7 +40,7 @@ public class PasswordInfoFragment extends Fragment {
     private byte[] encryptedPassword, iv;
     private TextView mAccountName, mUsername, mPassword;
     private EditText mEditAccountName, mEditUsername, mEditPassword;
-    private String mNewAccountName, mNewUsername, mNewPassword, mNewIV;
+    private String mNewAccountName, mNewUsername, mNewEncryptedPassword, mNewIV;
     private Button mDecrypt, mEncrypt;
     private SecretKeySpec passwordKey;
 
@@ -194,10 +195,9 @@ public class PasswordInfoFragment extends Fragment {
         // Retrieve changes made to the account
         mNewAccountName = mEditAccountName.getText().toString();
         mNewUsername = mEditUsername.getText().toString();
-        String temp = mEditPassword.getText().toString();
-        ArrayList<String> temp2 = encryptPassword(temp);
-        mNewPassword = temp2.get(0);
-        mNewIV = temp2.get(1);
+        ArrayList<String> temp = encryptPassword(mEditPassword.getText().toString());
+        mNewEncryptedPassword = temp.get(0);
+        mNewIV = temp.get(1);
 
         // Hide the EditTexts brought into view after 'Edit Account' action was pressed
         mEditAccountName.setVisibility(View.GONE);
@@ -205,7 +205,7 @@ public class PasswordInfoFragment extends Fragment {
         mEditPassword.setVisibility(View.GONE);
 
         // Save changes to AppDatabase
-        new EditAccountAsyncTask().execute(currentAccount, mNewAccountName, mNewUsername, mNewPassword, mNewIV);
+        new EditAccountAsyncTask().execute(currentAccount, mNewAccountName, mNewUsername, mNewEncryptedPassword, mNewIV);
 
         // Display the TextViews in place of the EditTexts, displaying the user's changes to change their account
         // The EditAccountsAsyncTask will update the TextViews with the new account information in the onPostExecute method

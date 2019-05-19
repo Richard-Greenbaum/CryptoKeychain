@@ -110,9 +110,8 @@ public class CreateAccountFragment extends Fragment {
                 PassGenDialogue.setPositiveButton("Generate Password", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String secure_password = generatePassword(upperLetterCB.isChecked(), numCB.isChecked(),
-                                symbolCB.isChecked(), passwordLengthPicker);
-                        password.setText(secure_password);
+                        password.setText(generatePassword(upperLetterCB.isChecked(), numCB.isChecked(),
+                                symbolCB.isChecked(), passwordLengthPicker));
                     }
                 });
                 PassGenDialogue.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -131,7 +130,6 @@ public class CreateAccountFragment extends Fragment {
             public void onClick(View v) {
                 String mAccountName = website.getText().toString();
                 String mUsername = username.getText().toString();
-                String mPassword = password.getText().toString();
 
                 // Retrieve the key derived from the user's master password
                 passwordKey = ((MainActivity)getActivity()).passwordKey;
@@ -160,7 +158,7 @@ public class CreateAccountFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                byte[] temp = mPassword.getBytes(Charset.defaultCharset());
+                byte[] temp = password.getText().toString().getBytes(Charset.defaultCharset());
                 try {
                     temp = cipher.doFinal(temp);
                 } catch (BadPaddingException e) {
@@ -210,8 +208,6 @@ public class CreateAccountFragment extends Fragment {
 
         StringBuilder generatedPassword = new StringBuilder();
         for (int i = 0; i <= lengthPicker.getValue()-1; i++) {
-            Log.d("num", String.valueOf(i));
-
             Random random = new SecureRandom();
             int index = random.nextInt(base.size());
             generatedPassword.append(base.get(index));
